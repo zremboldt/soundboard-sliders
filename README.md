@@ -6,6 +6,4 @@ This gave me a chance to try some new techniques I'd heard of but hadn't played 
 
 Had a lot of fun and love how it turned out:
 
-<video controls src="soundboard-sliders.mp4"></video>
-
-![Image](soundboard-sliders.png)
+https://github.com/zremboldt/soundboard-sliders/assets/19367659/5464cb44-4e03-44bf-837f-a4ec262d91b2
