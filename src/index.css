@@ -1,0 +1,262 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --background: 240 10% 3.9%;
+  --foreground: 60 9.1% 97.8%;
+  --card: 244 20% 9%;
+  --card-foreground: 250 3% 70%;
+  --border: 244 17% 18%;
+}
+
+:root {
+  background-color: hsl(var(--background));
+
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
+
+#main {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: 1rem;
+}
+
+.board {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 90px;
+  padding: 60px 110px 60px 60px;
+  border-radius: 20px;
+  border-top: 1.5px solid hsl(var(--border));
+  background-image: linear-gradient(
+    200deg,
+    hsl(var(--card)),
+    hsl(var(--card) / 0.2)
+  );
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/5/5c/Image_gaussian_noise_example.png);
+  }
+
+  @media (max-width: 800px) {
+    padding: 60px 86px 60px 36px;
+  }
+}
+
+.control-set {
+  display: flex;
+  gap: 45px;
+}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* Indicator */
+
+.indicator-container {
+  display: flex;
+  gap: 18px;
+}
+
+.indicator-left {
+  display: flex;
+  gap: 10px;
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    text-align: end;
+
+    label {
+      font-weight: 600;
+    }
+    label,
+    span {
+      margin: 0;
+      font-size: 1rem;
+      color: hsl(var(--foreground) / 0.5);
+      user-select: none;
+    }
+  }
+}
+
+.indicator-right {
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+}
+
+.indicator-track {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background-color: hsl(var(--background) / 0.8);
+  box-shadow: inset 0 -2px 0 0 hsl(var(--border)),
+    inset 0 0 0 2px hsl(var(--background));
+  border-radius: 999px;
+  padding: 2.5px;
+  width: 12px;
+}
+
+.indicator-light {
+  &.green-light {
+    --light-color-dull: 162 30% 50%;
+    --light-color: 162 56% 70%;
+    --light-bright: 162 100% 90%;
+  }
+  &.orange-light {
+    --light-color-dull: 22 30% 50%;
+    --light-color: 22 56% 70%;
+    --light-bright: 22 100% 90%;
+  }
+
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  border-radius: 999px;
+  padding: 2px;
+  box-shadow: 0 -10px 20px -3px hsl(var(--light-color) / 0.3),
+    0 -15px 40px 2px hsl(var(--light-color) / 0.4),
+    0 -20px 40px 0px hsl(var(--light-bright) / 0.1);
+
+  background-image: linear-gradient(
+    to top,
+    hsl(var(--light-color-dull) / 0) 0%,
+    hsl(var(--light-color-dull)) 90%
+  );
+
+  & .indicator-light-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background-image: linear-gradient(
+      to top,
+      hsl(var(--light-color) / 0.05) 0%,
+      hsl(var(--light-color) / 0.9) 30%,
+      hsl(var(--light-bright)) 100%
+    );
+  }
+}
+
+/* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* Slider */
+
+.slider-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  width: 45px;
+}
+
+.slider-track {
+  flex: 1;
+  background-color: hsl(var(--background) / 0.8);
+  box-shadow: inset 0 -2px 0 0 hsl(var(--border)),
+    inset 0 0 0 2px hsl(var(--background));
+  border-radius: 999px;
+  width: 12px;
+}
+
+.slider-handle-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  width: 50px;
+  padding: 3px;
+  background-color: hsl(var(--background));
+  border-radius: 8px;
+  border-top: 1px solid hsl(var(--border));
+  box-shadow: 4px 10px 18px 4px hsl(var(--background));
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.slider-handle-half-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 6px;
+  padding: 1px;
+}
+
+.glow {
+  &.green-light {
+    --light-color: 162 26% 40%;
+    --light-bright: 162 60% 90%;
+  }
+  &.orange-light {
+    --light-color: 22 26% 40%;
+    --light-bright: 22 100% 80%;
+  }
+
+  position: absolute;
+  inset: 0;
+  width: 60px;
+  width: 60px;
+  offset-path: rect(0% auto 100% auto);
+  offset-distance: 84%; /* default value keeps reflections from spinning on initial render */
+  background: radial-gradient(
+    hsl(var(--light-bright)) 0%,
+    hsl(var(--light-color)) 30%,
+    transparent 60%
+  );
+}
+
+.slider-handle-top-half,
+.slider-handle-bottom-half {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: hsl(var(--background));
+}
+
+.slider-handle-top-half {
+  background-image: linear-gradient(
+    to bottom,
+    hsl(var(--border) / 0.3) 0%,
+    hsl(var(--border)) 30%,
+    hsl(var(--border) / 0.2) 34%,
+    hsl(var(--border) / 0.4) 100%
+  );
+}
+
+.slider-handle-bottom-half {
+  background-image: linear-gradient(
+    to bottom,
+    hsl(var(--border) / 0.35) 0%,
+    hsl(var(--border)) 66%,
+    hsl(var(--border) / 0.2) 70%,
+    hsl(var(--border) / 0.2) 100%
+  );
+}
